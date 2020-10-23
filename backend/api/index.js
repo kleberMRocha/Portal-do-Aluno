@@ -2,4 +2,4 @@ const express = require('express');
 
 const app = express();
 
-app.listen(4000, () => console.log('Servidor Rodando na porta 4000'));
+app.listen(4000, () => console.log('Server Up'));
