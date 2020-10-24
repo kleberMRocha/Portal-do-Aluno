@@ -23,52 +23,52 @@ module.exports = {
         type: Sequelize.STRING,
       },
       estapa_01_N1: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_01_N2: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_01_F1: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_01_F2: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_02_N1: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_02_N2: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_02_F1: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_02_F2: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_03_N1: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_03_N2: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_03_F1: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_03_F2: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_04_N1: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_04_N2: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       estapa_04_F1: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       estapa_04_F2: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

@@ -6,31 +6,34 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       nome: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
       },
       foto: {
         type: Sequelize.STRING,
       },
       genero: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       dataNascimento: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
-      Status: {
-        type: Sequelize.BOOLEAN
+      status: {
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {

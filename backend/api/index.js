@@ -1,5 +1,3 @@
-const express = require('express');
+const customExpress = require('./CustomExpress');
 
-const app = express();
-
-app.listen(4000, () => console.log('Server Up'));
+const app = customExpress();
