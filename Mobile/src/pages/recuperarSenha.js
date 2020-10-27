@@ -1,9 +1,8 @@
-import { Link, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { View, Text, StyleSheet, Image, TextInput } from "react-native";
-import LoginPageIMG from "../assets/LoginPageIMG/g10.png";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 
 export default function LoginPage() {
   const [infoRecuperacao, setInfo] = useState("");

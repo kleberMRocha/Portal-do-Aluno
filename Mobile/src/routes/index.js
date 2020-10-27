@@ -1,17 +1,14 @@
-import React from "react";
-import LoginRoutes from "./login.routes";
-import AuthContext, { AuthProvider } from "../contexts/auth";
+import React, { useContext } from 'react';
+import LoginRoutes from './login.routes';
+import AuthRoutes  from './auth.routes';
+import AuthContext from '../contexts/auth';
 
-// import AuthRoutes from './auth.routes';
+const Routes = () => {
+  
+  const { signed } = useContext(AuthContext);
 
-function Routes() {
-  return (
-
-      <AuthProvider>
-          <LoginRoutes />
-      </AuthProvider>
-
-  );
+  return (signed ? <AuthRoutes/> : <LoginRoutes/>)
+   
 }
 
 export default Routes;

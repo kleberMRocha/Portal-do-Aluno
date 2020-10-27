@@ -1,42 +1,44 @@
-import {useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
+import {useNavigation } from '@react-navigation/native';
 import React, { useState,useContext } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, Switch } from 'react-native';
 import LoginPageIMG from '../assets/LoginPageIMG/g10.png';
 import AuthContext from '../contexts/auth';
- 
+import api from '../services/api'; 
 
 export default function LoginPage() {
-  const {signed} = useContext(AuthContext);  
-  console.log(signed);
+
+  const {getToken, isDadosValidos} = useContext(AuthContext);
+
   const navigation = useNavigation();
   const [user, setUser] = useState('');
   const [senha, setSenha] = useState('');
+  const [eUmDocente, setDocente] = useState(false);
 
-  function HandleToRecuperaSenha() {
+  function handleToRecuperaSenha() {
     navigation.navigate('RecuperarSenha');
   }
 
   return (
     <View style={styles.container}>
       <Image source={LoginPageIMG} />
-         <Text style={styles.boasVindas}>Boas-vindas</Text>
+      <Text style={styles.boasVindas}>Boas-vindas </Text>
       <Text style={styles.intrucao}>Faça o login para continuar</Text>
-      <View style={styles.formGroup}>
+      {!isDadosValidos && <Text style={styles.intrucaoError}>Dados Invalidos</Text>}
+      <View style={isDadosValidos ? styles.formGroup : styles.formGroupError}>
         <FontAwesome name='user' size={24} color='#DEDEDE' />
         <TextInput
-          onChange={(e) => setUser(e.value)}
-          placeholder=' Matrícula ou E-mail'
+          onChangeText={(user) => setUser(user)}
+          placeholder='Matrícula ou E-mail'
           style={styles.textInput}
-          value={user}
         />
       </View>
 
-      <View style={styles.formGroup}>
+      <View style={isDadosValidos ? styles.formGroup : styles.formGroupError}>
         <FontAwesome name='lock' size={24} color='#DEDEDE' />
         <TextInput
-          onChange={(e) => setSenha(e.value)}
+          onChangeText={(senha) => setSenha(senha)}
           placeholder=' Senha de Acesso'
           secureTextEntry={true}
           style={styles.textInput}
@@ -44,15 +46,27 @@ export default function LoginPage() {
         />
       </View>
 
-      <RectButton onPress={HandleToRecuperaSenha}>
+      <RectButton onPress={handleToRecuperaSenha}>
       <Text style={styles.recuperarSenhaText} >Esqueceu a senha?</Text>
       </RectButton>
-      <RectButton style={styles.loginBtn}>
+      <View style={styles.switchGroup}>
+        <Text style={styles.intrucao}>Eu sou Docente :</Text>
+        <Switch
+          value={eUmDocente}
+          onValueChange={()=> setDocente(!eUmDocente)}
+        />
+      </View>
+      <RectButton 
+        style={styles.loginBtn}
+        onPress={() => getToken(user,senha,eUmDocente,api)}
+
+      >
         <Text style={styles.loginBtnText}>Log in</Text>
       </RectButton>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -98,6 +112,14 @@ const styles = StyleSheet.create({
     margin: 3,
     fontFamily: 'Nunito_400Regular',
   },
+  intrucaoError:{
+    color: 'tomato',
+    fontSize: 16,
+    textDecorationLine:'underline',
+    margin: 3,
+    fontFamily: 'Nunito_400Regular',
+
+  },
   formGroup: {
     width: 274,
     height: 49,
@@ -110,4 +132,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#55C3FE',
   },
+  formGroupError: {
+    width: 274,
+    height: 49,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 8,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: 'tomato',
+  },
+  switchGroup:{
+    flexDirection:'row',
+    justifyContent:'center',
+    margin:15
+  }
 });

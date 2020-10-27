@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const database = require('../models');
+require('dotenv').config();
 
 const authErrorResponse = { error: 'houve um erro na autenticação!' };
 
@@ -10,9 +11,10 @@ class LoginController {
     // {
     //   "id":"2",
     //   "senha":"123",
-    //   "role":"estudante"
+    //   "role":"false"
     // }
 
+    if (!req.body.role) return res.status(401).json(authErrorResponse);
     try {
       const userPassword = req.body.senha;
       const { role } = req.body;
@@ -31,8 +33,8 @@ class LoginController {
         if (err) return res.status(401).json(authErrorResponse);
         if (!result) return res.status(401).json(authErrorResponse);
 
-        const token = jwt.sign({ user }, userPassword, { expiresIn: '1h' });
-        return res.status(201).json({ id: roleQuery, secretToken: token });
+        const token = jwt.sign({ user }, process.env.JWT_PASSWORD, { expiresIn: '1h' });
+        return res.status(201).json({ roleQuery, auth: true, token });
       });
     } catch (error) {
       return res.status(401).json(authErrorResponse);
@@ -41,14 +43,19 @@ class LoginController {
   }
 
   static async authentication(req, res, next) {
-    const { secretToken, senha } = req.body;
+    // expected
+    // {
+    //   "token":"1544asd%F(U*U*J(*D23",
+    // }
 
-    if (!secretToken) {
+    const { token } = req.headers;
+
+    if (!token) {
       return res.status(401).json(authErrorResponse);
     }
 
     try {
-      jwt.verify(secretToken, senha, (err, decoded) => {
+      jwt.verify(token, process.env.JWT_PASSWORD, (err, decoded) => {
         if (err) {
           return res.status(401).json(authErrorResponse);
         }
