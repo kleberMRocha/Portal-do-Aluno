@@ -17,8 +17,7 @@ class LoginController {
     if (!req.body.role) return res.status(401).json(authErrorResponse);
     try {
       const userPassword = req.body.senha;
-      const { role } = req.body;
-      const { id } = req.body;
+      const { role, id } = req.body;
 
       const roleQuery = role === 'estudante'
         ? { userId: parseInt(id, 10) }

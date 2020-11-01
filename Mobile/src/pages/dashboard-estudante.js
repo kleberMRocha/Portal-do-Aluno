@@ -1,24 +1,30 @@
-import React,{useContext} from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import AuthContext from "../contexts/auth";
+import React from "react";
+import { Text, StyleSheet, ScrollView } from "react-native";
+import HeaderPortal from "../components/Header";
+
 
 
 export default function DashboardEstudante() {
-  const {roleQuery,token,logOut} = useContext(AuthContext);
+
 
   return (
-    <View style={styles.container}>
-      <Text>Boas-Vindas</Text>
-      <Button title='Log Out' onPress={logOut} />
-    </View>
+    <ScrollView style={styles.container}>
+     
+      <HeaderPortal isAMainPage={true}/>
+  
+      <Text style={styles.instructionsText}>Seleciona um periodo Letrivo </Text>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ADF8FF",
-    alignItems: "center",
-    justifyContent: "center",
   },
+  instructionsText:{
+    fontSize:18,
+    fontFamily: 'Nunito_400Regular',
+    textAlign:'center',
+    color:'#FA7F72',
+  }
 });
