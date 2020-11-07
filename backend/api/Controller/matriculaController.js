@@ -1,32 +1,33 @@
 const database = require('../models');
 
 class MatriculaController {
+  // by Matricula Id
   static async getMatricula(req, res) {
     try {
       const { id } = req.params;
-      const matricula = await database.Matriculas.findOne({ where: { estudanteId: id } });
-      const diciplinas = await database.Diciplinas
-        .findAll({ where: { turmaId: matricula.turmaId } });
-      const turma = await database.Turmas
-        .findOne({ where: { id: matricula.turmaId } });
-      const perLetivo = await database.Periodosletivos
-        .findOne({ where: { id: turma.perletivoId } });
+      const matricula = await database.Matriculas
+        .findOne({
+          where: { id },
+          include: {
+            model: database.Turmas,
+            required: true,
+            include: {
+              model: database.Diciplinas,
+              required: true,
+            },
+          },
+        });
 
-      return res.status(200)
-        .json([
-          { matricula: matricula.id, status: matricula.status },
-          diciplinas,
-          { Nome_Turma: turma.nome },
-          { periodosletivo: perLetivo.nome },
-        ]);
+      return res.status(200).json(matricula);
     } catch (error) {
       return res.json({ error: `Erro ao consultar o banco de dados - ${error}` });
     }
   }
 
+  // by Estudante Id
   static async getAllMatriculas(req, res) {
     try {
-      const { id } = req.params;
+      const id = parseInt(req.user, 10);
       const matriculas = await database.Matriculas
         .findAll({
           where: { estudanteId: id },

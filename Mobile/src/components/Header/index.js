@@ -61,7 +61,7 @@ function HeaderPortal({ isAMainPage }){
 
             </View>
             <View style={styles.boasvindasView}>
-                 <Text style={styles.boasVindas}>Boas-Vindas</Text>
+                {isAMainPage && <Text style={styles.boasVindas}>Boas-Vindas</Text>}
                  <Text>{
                             roleQuery.userId 
                             ? 'Estudante' 

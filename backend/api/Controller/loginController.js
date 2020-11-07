@@ -26,13 +26,20 @@ class LoginController {
       const user = await database.Users
         .findOne({ where: roleQuery });
 
-      const { senha } = user;
+      const subjectInfo = String(user.dataValues.userId || user.dataValues.docentUserId);
 
+      const { senha } = user;
       bcrypt.compare(userPassword, senha, (err, result) => {
         if (err) return res.status(401).json(authErrorResponse);
         if (!result) return res.status(401).json(authErrorResponse);
 
-        const token = jwt.sign({ user }, process.env.JWT_PASSWORD, { expiresIn: '1h' });
+        const token = jwt.sign({ user }, process.env.JWT_PASSWORD,
+          {
+
+            expiresIn: '1h',
+            subject: subjectInfo,
+
+          });
         return res.status(201).json({ roleQuery, auth: true, token });
       });
     } catch (error) {
@@ -58,6 +65,7 @@ class LoginController {
         if (err) {
           return res.status(401).json(authErrorResponse);
         }
+        req.user = decoded.sub;
         next();
       });
     } catch (error) {
